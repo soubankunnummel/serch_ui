@@ -45,7 +45,7 @@ function App() {
   };
 
   useEffect(() => {
-    handleSearchChange()
+    handleSearchChange
   },[watch])
 
   return (
