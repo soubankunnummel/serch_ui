@@ -5,7 +5,7 @@ import SearchInput from "./components/SearchInput";
 import SearchResults from "./components/SearchResults";
 
 function App() {
-  const { register,watch } = useForm();
+  const { register, watch } = useForm();
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -16,13 +16,11 @@ function App() {
   const handleSearchChange = async (e) => {
     const keywords = e.target.value.trim();
 
-
-
-    if (keywords === '') {
+    if (keywords === "") {
       setResults([]);
       setVisible(false);
       setLoading(false);
-      setNoData(false);  
+      setNoData(false);
       return;
     }
 
@@ -30,32 +28,31 @@ function App() {
       setLoading(true);
       const searchResults = await Search("?search=" + keywords);
 
-        setResults(searchResults.data);
-        setVisible(true);
-        setLoading(false);
-        setError(null);
-        setNoData(searchResults.data.length === 0);  
-
+      setResults(searchResults.data);
+      setVisible(true);
+      setLoading(false);
+      setError(null);
+      setNoData(searchResults.data.length === 0);
     } catch (error) {
       setError("Error fetching search results");
       setLoading(false);
     }
-
-
   };
 
   useEffect(() => {
-    handleSearchChange
-  },[watch])
+    handleSearchChange;
+  }, [watch]);
 
   return (
-     
     <div className="w-full h-full p-5 flex flex-col items-center">
-    <SearchInput register={register} handleSearchChange={handleSearchChange} />
-    {loading && <p>Loading...</p>}
-    <SearchResults results={results} noData={noData}  visible={visible}/>
-    {error && <p className="text-red-500">{error}</p>}
-  </div>
+      <SearchInput
+        register={register}
+        handleSearchChange={handleSearchChange}
+      />
+      {loading && <p>Loading...</p>}
+      <SearchResults results={results} noData={noData} visible={visible} />
+      {error && <p className="text-red-500">{error}</p>}
+    </div>
   );
 }
 
